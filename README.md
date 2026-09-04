@@ -52,43 +52,43 @@ adaptive-slip-car/
 
 The linear and angular velocities of the skid-steer robot are calculated as:
 
-\[
+$$
 v = \frac{v_R + v_L}{2}
-\]
+$$
 
-\[
+$$
 \omega = \frac{v_R - v_L}{L}
-\]
+$$
 
-where \(v_L\) and \(v_R\) are the left and right wheel velocities, and \(L\) is the track width.
+where $v_L$ and $v_R$ are the left and right wheel velocities, and $L$ is the track width.
 
 The robot pose is updated using:
 
-\[
+$$
 x_{k+1} = x_k + v\cos(\theta)\Delta t
-\]
+$$
 
-\[
+$$
 y_{k+1} = y_k + v\sin(\theta)\Delta t
-\]
+$$
 
-\[
+$$
 \theta_{k+1} = \theta_k + \omega\Delta t
-\]
+$$
 
 Motor response is represented by a first-order model:
 
-\[
+$$
 v_{\text{motor,new}} =
 v_{\text{motor,old}} +
 \frac{v_{\text{target}}-v_{\text{motor,old}}}{\tau}\Delta t
-\]
+$$
 
 Wheel slip reduces the effective velocity:
 
-\[
+$$
 v_{\text{effective}} = (1-s)v_{\text{motor}}
-\]
+$$
 
 ## Machine Learning Model
 
@@ -120,30 +120,30 @@ The controller combines learned slip compensation with position and heading feed
 
 The desired angular velocity is calculated from lateral-position and heading errors:
 
-\[
+$$
 \omega_{\text{desired}} = k_y e_y + k_\theta e_\theta
-\]
+$$
 
 The desired left and right velocities are:
 
-\[
+$$
 v_{L,\text{desired}} =
 v_{\text{desired}} -
 \frac{\omega_{\text{desired}}L}{2}
-\]
+$$
 
-\[
+$$
 v_{R,\text{desired}} =
 v_{\text{desired}} +
 \frac{\omega_{\text{desired}}L}{2}
-\]
+$$
 
 The motor commands are compensated using the predicted slip:
 
-\[
+$$
 u_{\text{corrected}} =
 \frac{v_{\text{desired}}}{1-\hat{s}}
-\]
+$$
 
 The commands are limited to the valid range from 0 to 1.
 
